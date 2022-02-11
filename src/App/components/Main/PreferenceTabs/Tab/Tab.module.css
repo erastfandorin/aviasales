@@ -1,0 +1,57 @@
+.tab {
+    position:relative;
+    width: 33.3%;
+    height: 50px;
+}
+.tab:first-child .tabLabel {
+    border-radius: 5px 0 0 5px;
+}
+.tab:last-child .tabLabel {
+    border-radius: 0 5px 5px 0;
+}
+
+
+.tabLabel, 
+.tabRadioInput {
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+.tabIsActive .tabLabel {
+    background: #2196F3;
+    color: #FFFFFF;
+}
+
+.tabLabel {
+    z-index:90;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #4A4A4A;
+    background: #FFFFFF;
+    border: 1px solid #DFE5EC;
+    cursor:pointer;
+    transition: all .25s cubic-bezier(.71,-.46,.29,1.46);
+    user-select: none;
+
+}
+.tab:not(.tabIsActive) .tabLabel:hover {
+    color: #43536aa6;
+}
+/* .tabIsActive .tabLabel:hover {
+    color: #d8cfcf;
+} */
+
+.tabRadioInput {
+    z-index:100;
+    opacity:0.011;
+}

@@ -1,0 +1,82 @@
+.checkbox:last-child {
+    margin-bottom: 20px;
+}
+.checkbox:hover {
+    background: #F1FCFF;
+}
+.checkboxLabel {
+    box-sizing: border-box;
+    padding: 8px 20px;
+    width: 100%;
+    color: #606266;
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
+    user-select: none;
+}
+.checkboxInputWrapper {
+    white-space: nowrap;
+    outline: none;
+    display: inline-block;
+    line-height: 1;
+    position: relative;
+    vertical-align: middle;
+}
+.checkboxTick {
+    display: inline-block;
+    position: relative;
+    border: 1px solid #e6dce6;
+    border-radius: 2px;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    z-index: 1;
+    transition: border-color .25s cubic-bezier(.71,-.46,.29,1.46);
+}
+.checkboxIsChecked .checkboxTick {
+    border-color: #2196F3;
+}
+.checkboxTick::after {
+    box-sizing: content-box;
+    content: "";
+    border-left: 0;
+    border-top: 0;
+    height: 17px;
+    left: 3px;
+    position: absolute;
+    top: 0px;
+    transform: scaleY(0);
+    width: 12px;
+    transition: transform .15s ease-in .05s;
+    transform-origin: center;
+}
+.checkboxIsChecked .checkboxTick::after {
+    transform: scaleY(1);
+    background-image: url("../../../../../img/Shape.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.checkboxInput {
+    opacity: 0;
+    outline: none;
+    position: absolute;
+    margin: 0;
+    width: 0;
+    height: 0;
+    z-index: -1;
+}
+
+.checkboxName {
+    padding-left: 10px;
+    font-size: 13px;
+    line-height: 20px;
+    color: #4A4A4A;
+    color: #606266;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
+    user-select: none;
+}

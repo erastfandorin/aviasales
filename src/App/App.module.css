@@ -1,0 +1,18 @@
+.header {
+    display: flex;
+    justify-content: center;
+    margin-top: 45px;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 755px;
+    margin: 0 auto;
+}
+
+.mainRight {
+    max-width: 502px;
+    width: 100%;
+}
