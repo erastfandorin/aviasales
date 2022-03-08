@@ -8,19 +8,16 @@ const preferenceList = [
     {name:"Оптимальный",id:"optimal"}
 ];
 
-function PreferenceTabs() {
-    const [preferenceTabs, setPreferenceTabs] = useState("optimal"); // Cheapest Fastest Optimal
-
+function PreferenceTabs({preference, setPreference}) {
     function handleChange(e) {
-        console.log(e)
-        setPreferenceTabs(e.target.id);
+        setPreference(e.target.id);
     }
     return (
         <ul className={styles.preferenceTabs}>
-            { preferenceList.map( preference => 
-                <Tab key={preference.id} 
-                     tab={preference} 
-                     preferenceTabs={preferenceTabs}
+            { preferenceList.map( preferenceTab => 
+                <Tab key={preferenceTab.id} 
+                     tab={preferenceTab} 
+                     preference={preference}
                      handleChange={handleChange}
                      />
             )}

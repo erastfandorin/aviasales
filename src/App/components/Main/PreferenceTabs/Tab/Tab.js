@@ -1,8 +1,8 @@
 import styles from "./Tab.module.css"
 
-function Tab({tab, preferenceTabs, handleChange}) {
+function Tab({tab, preference, handleChange}) {
     const tabClasses = [styles.tab]
-    const isChecked = preferenceTabs === tab.id
+    const isChecked = preference === tab.id
     if(isChecked) {
         tabClasses.push(styles.tabIsActive)
     }

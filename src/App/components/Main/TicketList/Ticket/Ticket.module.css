@@ -1,15 +1,25 @@
 .ticket {
-
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
-.ticket__headBox {
-
+.headBox {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
-.ticket__headBoxPrice {
-    
+.headBoxPrice {
+    font-size: 24px;
+    color: #2196F3;
 }
-.ticket__flightThereBox {
-    
+.flightThereBox ul, 
+.flightBackBox ul {
+    display: flex;
+    justify-content: space-between;
 }
-.flightThereBox__route {
-    
+.flightThereBox ul {
+    margin-bottom: 10px;
 }

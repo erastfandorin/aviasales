@@ -1,0 +1,16 @@
+.route,
+.allTime,
+.transfers {
+    width: 140px;
+    display: flex;
+    flex-direction: column;
+}
+.headline {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #A0B0B9;
+}
+.info {
+    color: #4A4A4A;
+}
