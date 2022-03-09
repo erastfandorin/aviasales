@@ -14,12 +14,52 @@ const log = console.log;
 function App() {
   const [preference, setPreference] = useState("optimal"); // Cheapest, Fastest, Optimal
   const transferCountDefault = -1;
-  const [transferCount, setTransferCount] = useState(transferCountDefault); // 100, 0, 1, 2, 3,
+  const [transferCount, setTransferCount] = useState(transferCountDefault); // -1, 0, 1, 2, 3, 100
+  const [isLoading, setIsLoading] = useState(true)
+  const [tickets, setTickets] = useState([]);
+  const [filteredTickets, setFilteredTickets] = useState([]);
 
   useEffect( async () => {
-    const resalt = await ticketsService.getAllTickets();
-    log("result", resalt);
+    const result = await ticketsService.getAllTickets();
+    log("getAllTickets", result);
+    setTickets(result);
+    setIsLoading(false);
+
   }, []);
+  useEffect(() => {
+    const filteredTransferTickets = tickets.filter( ticket => {
+      return (ticket.segments[0].stops.length <= transferCount
+      && ticket.segments[1].stops.length <= transferCount) 
+      || transferCount === transferCountDefault;
+    })
+
+    switch (preference) {
+      case 'cheapest':
+        const cheapestTicket = filteredTransferTickets.sort(comparePrice);
+        function comparePrice( a, b ) {
+          if ( a.price < b.price ){
+            return -1;
+          }
+          if ( a.price > b.price ){
+            return 1;
+          }
+          return 0;
+        }
+        log(cheapestTicket);
+        break;
+      case 'fastest':
+        
+        break;
+      case 'optimal':
+        
+        break;
+      default:
+        break;
+    }
+    // filteredTransferTickets.
+    // log("filtered",filteredTransferTickets);
+    // log(tickets, preference, transferCount);
+  }, [preference, transferCount])
   
 
   return (
@@ -37,9 +77,15 @@ function App() {
             preference={preference} 
             setPreference={setPreference}
           />
-          <TicketList />
-        </div>
+          {isLoading
+            ? <div className={styles.loadingSpinner}>
+                <div className={styles.load}>
+                  <div></div>
+                </div>
+              </div> 
+            : <TicketList tickets={tickets} /> }
         {/* {preference} */}
+        </div>
       </main>
     </>
   );
