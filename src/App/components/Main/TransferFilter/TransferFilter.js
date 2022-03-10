@@ -17,13 +17,13 @@ function TransferFilter({ setTransferCount, transferCountDefault }) {
         newArr[index].isChecked = e.target.checked;
         setFilterCheckboxes(newArr);
 
-        let nweCount = transferCountDefault;
+        let newCount = transferCountDefault;
         newArr.forEach( checkbox => {
-            if(checkbox.isChecked && nweCount < checkbox.transferCount) {
-                nweCount = checkbox.transferCount
+            if(checkbox.isChecked && newCount < checkbox.transferCount) {
+                newCount = checkbox.transferCount
             }
         })
-        setTransferCount(nweCount);
+        setTransferCount(newCount);
     }
     function getCheckboxIndex(e) {
         const id = e.target.id

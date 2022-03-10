@@ -45,7 +45,10 @@ function App() {
           }
           return 0;
         }
-        log(cheapestTicket);
+        // log(cheapestTicket);
+        const fiveTickets = cheapestTicket.slice(0,5);
+        log(fiveTickets);
+        setFilteredTickets(fiveTickets);
         break;
       case 'fastest':
         
@@ -83,7 +86,7 @@ function App() {
                   <div></div>
                 </div>
               </div> 
-            : <TicketList tickets={tickets} /> }
+            : <TicketList tickets={filteredTickets} /> }
         {/* {preference} */}
         </div>
       </main>

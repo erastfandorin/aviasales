@@ -1,10 +1,13 @@
 import Ticket from "./Ticket/Ticket";
 import styles from "./TicketList.module.css";
 
-function TicketList(props) {
+function TicketList({tickets}) {
+    console.log("tickets", tickets);
     return (
         <ul className={styles.ticketList}>
-            <Ticket />
+            {tickets.map( (ticket, index) => 
+                <Ticket key={index} ticket={ticket} />
+            )}
         </ul>
     );
 }
