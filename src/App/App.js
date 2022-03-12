@@ -28,9 +28,8 @@ function App() {
   useEffect(() => {
     renderTickets();
   }, [tickets, preference, transferCount])
-  function renderTickets() {
-    log("tickets", tickets);
 
+  function renderTickets() {
     const filteredTransferTickets = tickets.filter( ticket => {
       return (ticket.segments[0].stops.length <= transferCount
       && ticket.segments[1].stops.length <= transferCount) 
@@ -58,17 +57,52 @@ function App() {
             previousValue + currentValue.duration, 0);
           const sumTicketDurationB = b.segments.reduce( (previousValue, currentValue) =>
             previousValue + currentValue.duration, 0);
-         if ( sumTicketDurationA < sumTicketDurationB ){
+         if ( sumTicketDurationA < sumTicketDurationB ) {
            return -1;
          }
-         if ( sumTicketDurationA > sumTicketDurationB ){
+         if ( sumTicketDurationA > sumTicketDurationB ) {
            return 1;
          }
          return 0;
         }        
         break;
       case 'optimal':
+        const prices = filteredTransferTickets.map(ticket => ticket.price)
+        const maxPrice = Math.max(...prices, 0);
+        const minPrice = Math.min(...prices, 0);
         
+        const durations = filteredTransferTickets.map(ticket => {
+          return ticket.segments.reduce( (previousValue, currentValue) => 
+          previousValue + currentValue.duration, 0);
+        });
+        const maxDuration = Math.max(...durations, 0);
+        const minDuration = Math.min(...durations, 0);
+
+        sortedTickets = filteredTransferTickets.sort(calculateOptimal);
+        function calculateOptimal(a, b) {
+          const normalizedPriceA = normalizeCount(a.price , maxPrice, minPrice);
+          const normalizedPriceB = normalizeCount(b.price , maxPrice, minPrice);
+  
+          const durationA = a.segments.reduce( (previousValue, currentValue) => 
+            previousValue + currentValue.duration, 0)
+          const durationB = b.segments.reduce( (previousValue, currentValue) => 
+            previousValue + currentValue.duration, 0)
+          const normalizedDurationA = normalizeCount(durationA, maxDuration, minDuration);
+          const normalizedDurationB = normalizeCount(durationB, maxDuration, minDuration);
+  
+          const normalizedCountA = normalizedPriceA + normalizedDurationA;
+          const normalizedCountB = normalizedPriceB + normalizedDurationB;
+          if ( normalizedCountA < normalizedCountB ) {
+            return -1;
+          }
+          if ( normalizedCountA > normalizedCountB ) {
+            return 1;
+          }
+          return 0;
+        }        
+        function normalizeCount(val, max, min) { 
+          return (val - min) / (max - min); 
+        }
         break;
       default:
         break;
@@ -77,7 +111,6 @@ function App() {
     setFilteredTickets(fiveTickets);
   }
   
-
   return (
     <>
       <header className={styles.header}>
@@ -105,5 +138,4 @@ function App() {
     </>
   );
 }
-
 export default App;
