@@ -1,56 +1,71 @@
 .header {
-    display: flex;
-    justify-content: center;
-    margin-top: 45px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 45px;
+  margin-bottom: 20px;
 }
 
 .main {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    max-width: 755px;
-    margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 755px;
+  margin: 0 auto;
 }
 
 .mainRight {
-    max-width: 502px;
-    width: 100%;
+  max-width: 502px;
+  width: 100%;
 }
+
+@media (max-width: 767px) {
+    .main {
+      flex-direction: column;
+      align-items: center;
+    }
+    .mainRight {
+      width: 95%;
+    }
+}
+
 
 /* loader */
 @keyframes load {
-    0% { transform: translate(-50%,-50%) rotate(0deg); }
-    100% { transform: translate(-50%,-50%) rotate(360deg); }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 .load div {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    border: 4px solid #2196f3;
-    border-top-color: transparent;
-    border-radius: 50%;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 4px solid #2196f3;
+  border-top-color: transparent;
+  border-radius: 50%;
 }
 .load div {
-    animation: load 1.3513513513513513s linear infinite;
-    top: 98.5px;
-    left: 98.5px
+  animation: load 1.3513513513513513s linear infinite;
+  top: 98.5px;
+  left: 98.5px;
 }
 .loadingSpinner {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 }
 .load {
-    width: 197px;
-    height: 197px;
-    position: relative;
-    transform: translateZ(0) scale(1);
-    backface-visibility: hidden;
-    transform-origin: 0 0; /* see note above */
+  width: 197px;
+  height: 197px;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
 }
-.load div { 
-    box-sizing: content-box;
+.load div {
+  box-sizing: content-box;
 }

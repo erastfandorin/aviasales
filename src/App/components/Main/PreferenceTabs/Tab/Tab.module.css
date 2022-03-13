@@ -37,13 +37,21 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
     color: #4A4A4A;
+    text-align: center;
     background: #FFFFFF;
     border: 1px solid #DFE5EC;
     cursor:pointer;
     transition: all .25s cubic-bezier(.71,-.46,.29,1.46);
     user-select: none;
-
 }
+
+@media (max-width: 767px) {
+    .tabLabel {
+        font-size: 11px;
+        line-height: 15px;
+    }
+}
+
 .tab:not(.tabIsActive) .tabLabel:hover {
     color: #43536aa6;
 }
