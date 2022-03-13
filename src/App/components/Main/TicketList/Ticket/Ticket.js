@@ -11,7 +11,7 @@ function Ticket({ticket}) {
         <li className={style.ticket}>
             <div className={style.headBox}>
                 <div className={style.headBoxPrice}>{dollars} $</div>
-                <img src={srcPatch}/>
+                <img src={srcPatch} alt="air company"/>
             </div>
             <div className={style.flightRoutBox}>
                 {ticket.segments.map( (segment, index) => 

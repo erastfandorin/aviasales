@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Tab from "./Tab/Tab";
 import styles from "./PreferenceTabs.module.css";
 
