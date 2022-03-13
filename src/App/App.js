@@ -9,8 +9,6 @@ import ticketsService from "./services/ticketsService.js";
 import Logo from "../img/Logo.png";
 import styles from "./App.module.css";
 
-const log = console.log;
-
 function App() {
   const [preference, setPreference] = useState("fastest"); // Cheapest, Fastest, Optimal
   const transferCountDefault = -1;
