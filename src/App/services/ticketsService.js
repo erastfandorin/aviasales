@@ -1,4 +1,4 @@
-export default {
+const ticketsService = {
     URL: 'https://front-test.beta.aviasales.ru',
     searchId: '',
 
@@ -39,3 +39,5 @@ export default {
         }
     },
 }
+
+export default ticketsService;
