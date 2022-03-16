@@ -1,6 +1,6 @@
-##React app for searching for tickets according to specified conditions
+## React app for searching for tickets according to specified conditions
 
-![Imgur](https://i.imgur.com/MExRVwa.gifv)
+![Imgur](https://i.imgur.com/MExRVwa.gif)
 
 You can use this app
 [here](https://erastfandorin.github.io/aviasales/).
