@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
-
 import TransferFilter from "./components/Main/TransferFilter/TransferFilter.js";
 import PreferenceTabs from "./components/Main/PreferenceTabs/PreferenceTabs.js";
 import TicketList from "./components/Main/TicketList/TicketList.js";
+import LoadingSpinner from "./components/Main/LoadingSpinner/LoadingSpinner.js";
 
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.min.css';
-
+import "react-toastify/dist/ReactToastify.min.css";
 import ticketsService from "./services/ticketsService.js";
-
 import Logo from "../img/Logo.png";
 import styles from "./App.module.css";
 
+const transferCountDefault = -1;
+
 function App() {
   const [preference, setPreference] = useState("optimal"); // Cheapest, Fastest, Optimal
-  const transferCountDefault = -1;
   const [transferCount, setTransferCount] = useState(transferCountDefault); // -1, 0, 1, 2, 3, 100
   const [isLoading, setIsLoading] = useState(true);
   const [tickets, setTickets] = useState([]);
@@ -22,101 +21,55 @@ function App() {
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const result = await ticketsService.getAllTickets();
-      console.log(result);
       setTickets(result);
       setIsLoading(false);
     })();
   }, []);
 
   useEffect(() => {
-    const filteredTransferTickets = tickets.filter((ticket) => {
-      return (
-        (ticket.segments[0].stops.length <= transferCount &&
-          ticket.segments[1].stops.length <= transferCount) ||
-        transferCount === transferCountDefault
-      );
+    const filteredTickets = tickets.filter((ticket) => {
+      const transfer = ticket.segments.every((segment) => segment.stops.length <= transferCount);
+      return transfer || transferCount === transferCountDefault;
     });
 
-    let sortedTickets;
-    switch (preference) {
-      case "cheapest":
-        sortedTickets = filteredTransferTickets.sort(function (a, b) {
-          return a.price - b.price;
-        });
-        break;
-      case "fastest":
-        sortedTickets = filteredTransferTickets.sort(function (a, b) {
-          const sumTicketDurationA = a.segments.reduce(
-            (previousValue, currentValue) =>
-              previousValue + currentValue.duration,
-            0
-          );
-          const sumTicketDurationB = b.segments.reduce(
-            (previousValue, currentValue) =>
-              previousValue + currentValue.duration,
-            0
-          );
-
-          return sumTicketDurationA - sumTicketDurationB;
-        });
-        break;
-      case "optimal":
-        const prices = filteredTransferTickets.map((ticket) => ticket.price);
-        const maxPrice = Math.max(...prices, 0);
-        const minPrice = Math.min(...prices, 0);
-
-        const durations = filteredTransferTickets.map((ticket) => {
-          return ticket.segments.reduce(
-            (previousValue, currentValue) =>
-              previousValue + currentValue.duration,
-            0
-          );
-        });
-        const maxDuration = Math.max(...durations, 0);
-        const minDuration = Math.min(...durations, 0);
-
-        sortedTickets = filteredTransferTickets.sort(function (a, b) {
-          const normalizedPriceA = normalizeCount(a.price, maxPrice, minPrice);
-          const normalizedPriceB = normalizeCount(b.price, maxPrice, minPrice);
-
-          const durationA = a.segments.reduce(
-            (previousValue, currentValue) =>
-              previousValue + currentValue.duration,
-            0
-          );
-          const durationB = b.segments.reduce(
-            (previousValue, currentValue) =>
-              previousValue + currentValue.duration,
-            0
-          );
-          const normalizedDurationA = normalizeCount(
-            durationA,
-            maxDuration,
-            minDuration
-          );
-          const normalizedDurationB = normalizeCount(
-            durationB,
-            maxDuration,
-            minDuration
-          );
-
-          const normalizedCountA = normalizedPriceA + normalizedDurationA;
-          const normalizedCountB = normalizedPriceB + normalizedDurationB;
-
-          function normalizeCount(val, max, min) {
-            return (val - min) / (max - min);
-          }
-
-          return normalizedCountA - normalizedCountB;
-        });
-        break;
-      default:
-        break;
-    }
+    const sortedTickets = sortByPreference(filteredTickets, preference);
     const sortedFiveTickets = sortedTickets.slice(0, 5);
     setFilteredTickets(sortedFiveTickets);
-  }, [tickets, preference, transferCount, transferCountDefault]);
+
+    function sortByPreference(tickets, preference) {
+      switch (preference) {
+        case "cheapest":
+          return tickets.sort((a, b) => a.price - b.price);
+        case "fastest":
+          return tickets.sort((a, b) => getSumTicketDuration(a) - getSumTicketDuration(b));
+        case "optimal":
+          const prices = tickets.map((ticket) => ticket.price);
+          const maxPrice = Math.max(...prices, 0);
+          const minPrice = Math.min(...prices, 0);
+
+          const durations = tickets.map(getSumTicketDuration);
+          const maxDuration = Math.max(...durations, 0);
+          const minDuration = Math.min(...durations, 0);
+
+          return tickets.sort(function (a, b) {
+            const normalizedPriceA = normalizeCount(a.price, maxPrice, minPrice);
+            const normalizedPriceB = normalizeCount(b.price, maxPrice, minPrice);
+
+            const normalizedDurationA = normalizeCount(getSumTicketDuration(a), maxDuration, minDuration);
+            const normalizedDurationB = normalizeCount(getSumTicketDuration(b), maxDuration, minDuration);
+
+            return normalizedPriceA + normalizedDurationA - (normalizedPriceB + normalizedDurationB);
+          });
+        default:
+          return tickets;
+      }
+    }
+
+    const getSumTicketDuration = (ticket) => ticket.segments.reduce((prev, curr) => prev + curr.duration, 0);
+    const normalizeCount = (val, max, min) => (val - min) / (max - min);
+  }, [tickets, preference, transferCount]);
 
   return (
     <>
@@ -124,24 +77,10 @@ function App() {
         <img src={Logo} alt="logo" />
       </header>
       <main className={styles.main}>
-        <TransferFilter
-          setTransferCount={setTransferCount}
-          transferCountDefault={transferCountDefault}
-        />
+        <TransferFilter setTransferCount={setTransferCount} transferCountDefault={transferCountDefault} />
         <div className={styles.mainRight}>
-          <PreferenceTabs
-            preference={preference}
-            setPreference={setPreference}
-          />
-          {isLoading ? (
-            <div className={styles.loadingSpinner}>
-              <div className={styles.load}>
-                <div></div>
-              </div>
-            </div>
-          ) : (
-            <TicketList tickets={filteredTickets} />
-          )}
+          <PreferenceTabs preference={preference} setPreference={setPreference} />
+          {isLoading ? <LoadingSpinner /> : <TicketList tickets={filteredTickets} />}
         </div>
         <ToastContainer
           position="top-right"

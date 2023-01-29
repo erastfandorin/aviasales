@@ -1,0 +1,40 @@
+@keyframes load {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.load div {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 4px solid #2196f3;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+.load div {
+  animation: load 1.3513513513513513s linear infinite;
+  top: 98.5px;
+  left: 98.5px;
+}
+.loadingSpinner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.load {
+  width: 197px;
+  height: 197px;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0;
+}
+.load div {
+  box-sizing: content-box;
+}
