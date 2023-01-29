@@ -1,25 +1,23 @@
 import { toast } from "react-toastify";
+import testData from "./testData.json";
 
 const ticketsService = {
   URL: "https://front-test.beta.aviasales.ru",
-  searchId: "",
 
-  getSearchId: async function () {
+  _getSearchId: async function () {
     try {
-      console.log(`${this.URL}/search`);
       const response = await fetch(`${this.URL}/search`);
-      const parsedResponse = await response.json();
-      this.searchId = parsedResponse.searchId;
+      const { searchId } = await response.json();
+      return searchId;
     } catch (err) {
       toast.error("Some trouble on server, sorry(");
       throw err;
     }
   },
-  getPackTickets: async function () {
+  getPackTickets: async function (searchId) {
     try {
-      console.log(`${this.URL}/tickets?searchId=${this.searchId}`);
       const response = await fetch(
-        `${this.URL}/tickets?searchId=${this.searchId}`
+        `${this.URL}/tickets?searchId=${searchId}`
       );
       if (response.status === 200) {
         const parsedResponse = await response.json();
@@ -35,18 +33,39 @@ const ticketsService = {
     try {
       let ticketPack = [];
       let response;
-      await this.getSearchId();
-      console.log("active?");
+      const searchId = await this._getSearchId();
       do {
-        response = await this.getPackTickets();
+        response = await this.getPackTickets(searchId);
         ticketPack = [...ticketPack, ...response.tickets];
       } while (!response.stop);
       return ticketPack;
     } catch (err) {
-      toast.error("Some trouble on server, sorry(");
-      throw err;
+      toast("🦄 So, we load test dates)");
+      return testData;
     }
   },
 };
 
 export default ticketsService;
+
+
+// interface ticket {
+//     "price": number,
+//     "carrier": "string",
+//     "segments": [
+//         {
+//             "origin": "string",
+//             "destination": "string",
+//             "date": "string",
+//             "stops": string[],
+//             "duration": number
+//         },
+//         {
+//             "origin": "string",
+//             "destination": "string",
+//             "date": "string",
+//             "stops": string[],
+//             "duration": number
+//         }
+//     ]
+// }

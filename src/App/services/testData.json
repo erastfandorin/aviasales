@@ -1,0 +1,166 @@
+[
+    {
+        "price": 59300,
+        "carrier": "5N",
+        "segments": [
+            {
+                "origin": "CKC",
+                "destination": "CKC",
+                "date": "01.17.1995 03:24",
+                "stops": [
+                    "CKC"
+                ],
+                "duration": 574
+            },
+            {
+                "origin": "CKC",
+                "destination": "HKG",
+                "date": "01.17.1995 03:24",
+                "stops": [
+                    "HRK"
+                ],
+                "duration": 406
+            }
+        ]
+    },
+    {
+        "price": 54200,
+        "carrier": "EK",
+        "segments": [
+            {
+                "origin": "CEJ",
+                "destination": "DNK",
+                "date": "01.17.1995 03:24",
+                "stops": [
+                    "HRK",
+                    "HKG"
+                ],
+                "duration": 452
+            },
+            {
+                "origin": "IEV",
+                "destination": "IEV",
+                "date": "01.17.1995 03:2495",
+                "stops": [
+                    "CKC"
+                ],
+                "duration": 280
+            }
+        ]
+    },
+    {
+        "price": 27900,
+        "carrier": "EK",
+        "segments": [
+            {
+                "origin": "CWC",
+                "destination": "CKC",
+                "date": "01.17.1995 03:24",
+                "stops": [
+                    "DNK"
+                ],
+                "duration": 548
+            },
+            {
+                "origin": "CEJ",
+                "destination": "HKG",
+                "date": "01.17.1995 03:24",
+                "stops": [
+                    "DNK"
+                ],
+                "duration": 361
+            }
+        ]
+    },
+    {
+        "price": 51200,
+        "carrier": "DL",
+        "segments": [
+            {
+                "origin": "CWC",
+                "destination": "IEV",
+                "date": "01.17.1995 10:24",
+                "stops": [
+                    "DNK",
+                    "HRK",
+                    "CKC"
+                ],
+                "duration": 485
+            },
+            {
+                "origin": "CWC",
+                "destination": "CWC",
+                "date": "01.17.1995 10:24",
+                "stops": [
+                    "DNK",
+                    "HKG"
+                ],
+                "duration": 254
+            }
+        ]
+    },
+    {
+        "price": 23100,
+        "carrier": "EY",
+        "segments": [
+            {
+                "origin": "HKG",
+                "destination": "HRK",
+                "date": "01.17.1995 10:24",
+                "stops": [
+                    "CEJ"
+                ],
+                "duration": 397
+            },
+            {
+                "origin": "CKC",
+                "destination": "CKC",
+                "date": "01.17.1995 10:24",
+                "stops": [
+                    "CKC"
+                ],
+                "duration": 187
+            }
+        ]
+    },
+    {
+        "price": 25000,
+        "carrier": "5N",
+        "segments": [
+            {
+                "origin": "CEJ",
+                "destination": "CEJ",
+                "date": "01.17.1995 18:24",
+                "stops": [],
+                "duration": 595
+            },
+            {
+                "origin": "HRK",
+                "destination": "CKC",
+                "date": "01.17.1995 18:24",
+                "stops": [],
+                "duration": 566
+            }
+        ]
+    },
+    {
+        "price": 32700,
+        "carrier": "SV",
+        "segments": [
+            {
+                "origin": "HKG",
+                "destination": "CWC",
+                "date": "01.17.1995 18:24",
+                "stops": [],
+                "duration": 291
+            },
+            {
+                "origin": "HKG",
+                "destination": "CKC",
+                "date": "01.17.1995 18:24",
+                "stops": [],
+                "duration": 506
+            }
+        ]
+    }
+]
