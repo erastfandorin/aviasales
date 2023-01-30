@@ -66,9 +66,12 @@ function App() {
           return tickets;
       }
     }
-
-    const getSumTicketDuration = (ticket) => ticket.segments.reduce((prev, curr) => prev + curr.duration, 0);
-    const normalizeCount = (val, max, min) => (val - min) / (max - min);
+    function getSumTicketDuration(ticket) {
+      return ticket.segments.reduce((prev, curr) => prev + curr.duration, 0);
+    }
+    function normalizeCount(val, max, min) {
+      return (val - min) / (max - min);
+    }
   }, [tickets, preference, transferCount]);
 
   return (
