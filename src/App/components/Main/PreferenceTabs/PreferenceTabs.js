@@ -2,9 +2,9 @@ import Tab from "./Tab/Tab";
 import styles from "./PreferenceTabs.module.css";
 
 const preferenceList = [
-  { name: "Самый дешевый", id: "cheapest" },
-  { name: "Самый быстрый", id: "fastest" },
-  { name: "Оптимальный", id: "optimal" },
+  { name: "Найдешевший", id: "cheapest" },
+  { name: "Найшвидший", id: "fastest" },
+  { name: "Оптимальний", id: "optimal" },
 ];
 
 function PreferenceTabs({ preference, setPreference }) {

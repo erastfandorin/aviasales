@@ -48,7 +48,7 @@ function Route({ info }) {
         </div>
       </li>
       <li className={style.allTime}>
-        <div className={style.headline}>В пути</div>
+        <div className={style.headline}>В дорозі</div>
         <div className={style.info}>{convertMinutesToHoursMin(info.duration)}</div>
       </li>
       <li className={style.transfers}>

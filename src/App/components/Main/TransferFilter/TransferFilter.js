@@ -7,7 +7,7 @@ const transferCheckboxes = [
   { name: "1 пересадка", transferCount: 1, isChecked: false },
   { name: "2 пересадки", transferCount: 2, isChecked: false },
   { name: "3 пересадки", transferCount: 3, isChecked: false },
-  { name: "Все", transferCount: 100, isChecked: false },
+  { name: "Всі квитки", transferCount: 100, isChecked: false },
 ];
 
 function TransferFilter({ setTransferCount, transferCountDefault }) {
@@ -29,7 +29,7 @@ function TransferFilter({ setTransferCount, transferCountDefault }) {
 
   return (
     <div className={styles.filterBox}>
-      <p className={styles.filterBox__name}>Количество пересадок</p>
+      <p className={styles.filterBox__name}>Кількість пересадок</p>
       <ul className={styles.filterBox__list}>
         {filterCheckboxes.map((checkbox, index) => {
           return (
