@@ -1,47 +1,51 @@
+import { useMemo } from "react";
 import style from "./Route.module.css";
 
-function Route({ info }) {
-  const formattedTime = calculateArrivalTime(info.date, info.duration);
-  function calculateArrivalTime(departureString, duration) {
-    let date = new Date(Date.parse(departureString));
-    const startHours = date.getHours();
-    const startMinutes = date.getMinutes();
-    date.setMinutes(date.getMinutes() + duration);
-    const endHours = date.getHours();
-    const endMinutes = date.getMinutes();
-    return {
-      startTime: `${startHours}:${startMinutes}`,
-      endTime: `${endHours}:${endMinutes}`,
-    };
+function choiceTransfersHeadline(transfers) {
+  switch (transfers) {
+    case 0:
+      return "Без пересадок";
+    case 1:
+      return "1 пересадка";
+    default:
+      return `${transfers} пересадки`;
   }
-  function convertMinutesToHoursMin(min) {
-    let hours = Math.floor(min / 60);
-    let minutes = min % 60;
+}
 
-    hours = hours < 10 ? "0" + hours : hours;
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    return `${hours}ч ${minutes}м`;
-  }
-  function choiceTransfersHeadline(transfers) {
-    let headline = "";
-    switch (transfers) {
-      case 0:
-        headline = "Без пересадок";
-        break;
-      case 1:
-        headline = "1 пересадка";
-        break;
-      default:
-        headline = `${transfers} пересадки`;
-        break;
-    }
-    return headline;
-  }
+function calculateArrivalTime(departureString, duration) {
+  const date = new Date(Date.parse(departureString));
+
+  const startHours = `${date.getHours()}`.padStart("2", 0);
+  const startMinutes = `${date.getMinutes()}`.padStart("2", 0);
+  date.setMinutes(date.getMinutes() + duration);
+  const endHours = `${date.getHours()}`.padStart("2", 0);
+  const endMinutes = `${date.getMinutes()}`.padStart("2", 0);
+
+  return {
+    startTime: `${startHours}:${startMinutes}`,
+    endTime: `${endHours}:${endMinutes}`,
+  };
+}
+
+function convertMinutesToHoursMinutes(min) {
+  let hours = `${Math.floor(min / 60)}`.padStart("2", 0);
+  let minutes = `${min % 60}`.padStart("2", 0);
+
+  return `${hours}г ${minutes}хв`;
+}
+
+function Route({ segment }) {
+  const { date, duration, origin, destination, stops } = segment;
+
+  const formattedTime = useMemo(() => calculateArrivalTime(date, duration), [date, duration]);
+  const hourMinutes = useMemo(() => convertMinutesToHoursMinutes(duration), [duration]);
+  const transferHeadline = useMemo(() => choiceTransfersHeadline(stops.length), [stops.length]);
+
   return (
     <ul>
       <li className={style.route}>
         <div className={style.headline}>
-          {info.origin} – {info.destination}
+          {origin} – {destination}
         </div>
         <div className={style.info}>
           {formattedTime.startTime} – {formattedTime.endTime}
@@ -49,11 +53,11 @@ function Route({ info }) {
       </li>
       <li className={style.allTime}>
         <div className={style.headline}>В дорозі</div>
-        <div className={style.info}>{convertMinutesToHoursMin(info.duration)}</div>
+        <div className={style.info}>{hourMinutes}</div>
       </li>
       <li className={style.transfers}>
-        <div className={style.headline}>{choiceTransfersHeadline(info.stops.length)}</div>
-        <div className={style.info}>{info.stops.toString()}</div>
+        <div className={style.headline}>{transferHeadline}</div>
+        <div className={style.info}>{stops.toString()}</div>
       </li>
     </ul>
   );
